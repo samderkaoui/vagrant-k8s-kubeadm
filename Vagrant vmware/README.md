@@ -11,7 +11,7 @@ Puis télécharger et installer : https://developer.hashicorp.com/vagrant/downlo
 
 lancer la commande : `vagrant plugin install vagrant-vmware-desktop`
 
-4- `Vagrant up`
+4- `vagrant up vmware --provider=vmware_desktop `
 
 5- Done !
 
