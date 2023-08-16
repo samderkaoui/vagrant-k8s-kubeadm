@@ -1,0 +1,1 @@
+Ce repo aura pour vocation d'uniformiser nos process, partager nos connaissances et évoluer de manière plus rapide et efficace.
