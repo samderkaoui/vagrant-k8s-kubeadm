@@ -6,7 +6,6 @@
 
 
 # Si on ne veut pas utiliser de role, le playbook serait de type :
-# on retrouve les tasks directement dans le playbook
 
 ---
 - name: Install Docker sur Alma 8.7
