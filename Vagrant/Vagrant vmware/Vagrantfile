@@ -1,0 +1,40 @@
+Vagrant.configure("2") do |config|
+
+    #1- VMWARE
+    # vagrant up vmware --provider=vmware_desktop 
+    # (penser a installer vagrant-vmware-utility_1.0.21_x86_64) 
+    # et vagrant plugin install vagrant-vmware-desktop
+
+    
+    
+          config.vm.define "vmware" do |a|
+            a.vm.synced_folder '.', '/vagrant' # ici sur la vm dans /vagrant j'ai le contenu du dossier de mon Vagrant file
+            a.vm.box = "almalinux/9" # ici c'est alma qui sera instalé pour mettre ubuntu remplacer par : "ubuntu/mantic64" et pensez a modif les lignes de conf (dnf => apt)
+            a.vm.hostname = "TestVb"
+    
+    
+            a.vm.network "forwarded_port", guest: 5047, host: 5047, id: 'v'
+            a.vm.network "private_network", ip: "192.168.100.37"
+    
+    # Provisionnement par SHELL (inline et plusieurs lignes )
+            a.vm.provision "shell" do |s|
+              s.inline = <<-SHELL
+              sudo dnf install firewalld -y
+              sudo systemctl start firewalld
+              sudo systemctl enable firewalld
+              sudo firewall-cmd --add-port=22/tcp --permanent
+              sudo firewall-cmd --reload
+              SHELL
+    
+    #Provisionnement par scripts : Ce script automatise la configuration pour pouvoir se connecter en ssh a la vm avec mot de passe (sans clé ssh)
+              a.vm.provision:shell, path: "./ssh.sh"
+            end
+
+            a.vm.provider "vmware_desktop" do |v|
+              v.vmx["numvcpus"] = "2"
+              v.vmx["memsize"] = "1280"
+              v.vmx["displayName"] = "TestVmware"
+            end 
+          end
+        end
+      #fin
