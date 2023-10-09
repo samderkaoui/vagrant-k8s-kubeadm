@@ -10,7 +10,7 @@ Ce repo aura pour vocation d'uniformiser nos process, partager nos connaissances
 #### Assistant IA :
 + https://bard.google.com/?hl=fr
 + https://chat.openai.com/
-+ 
+
 #### Sécurisation linux :
 + https://www.ssi.gouv.fr/uploads/2019/02/fr_np_linux_configuration-v2.0.pdf
 
