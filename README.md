@@ -15,5 +15,13 @@ Ce repo aura pour vocation d'uniformiser nos process, partager nos connaissances
 + https://www.ssi.gouv.fr/uploads/2019/02/fr_np_linux_configuration-v2.0.pdf
 + https://complianceascode.github.io/content-pages/guides/index.html
 
+#### GIT :
++ https://www.conventionalcommits.org/en/v1.0.0/ (norme de commit)
+
+
 #### Veille techno via flux rss :
 + https://feedly.com/
+
+#### Télécharger video linkedin learning en local
++ https://github.com/knowbee/llvd
+
