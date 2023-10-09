@@ -1,6 +1,7 @@
 Ce repo aura pour vocation d'uniformiser nos process, partager nos connaissances et évoluer de manière plus rapide et efficace.
 
 + Vagrant : permet de créer des machines virtuel a la volé, rapidement et en un clic sur vmware ou virtualbox (ou autres...). La VM est accessible via ssh avec les id / pw : `vagrant / vagrant`
++ Ansible : permet de provisionner (configurer) des machines
 
 ### Liens utiles :
 #### Formation :
