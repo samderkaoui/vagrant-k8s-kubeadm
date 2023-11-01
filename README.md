@@ -2,6 +2,7 @@ Ce repo aura pour vocation d'uniformiser nos process, partager nos connaissances
 
 + Vagrant : permet de créer des machines virtuel a la volé, rapidement et en un clic sur vmware ou virtualbox (ou autres...). La VM est accessible via ssh avec les id / pw : `vagrant / vagrant`
 + Ansible : permet de provisionner (configurer) des machines
++ K8S cluster : permet de générer un cluster Kubernetes , avec master et worker
 
 ### Liens utiles :
 #### Formation :
