@@ -21,8 +21,8 @@ Vagrant.configure("2") do |config|
               sudo firewall-cmd --reload
               SHELL
     
-    #Provisionnement par scripts : Ce script automatise la configuration pour pouvoir se connecter en ssh a la vm avec mot de passe (sans clé ssh)
-              a.vm.provision:shell, path: "./ssh.sh"
+    #Provisionnement par scripts : juste pour le fun
+              a.vm.provision:shell, path: "./fun.sh"
             end
 
     
