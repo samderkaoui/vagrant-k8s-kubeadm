@@ -32,8 +32,8 @@ sudo systemctl restart sshd
 
 echo "[TACHE 2] MAJ FICHIER HOST"
 echo '192.168.10.100 k8s-master' | sudo tee -a /etc/hosts
-echo '192.168.10.101 k8s-worker1' | sudo tee -a /etc/hosts
-echo '192.168.10.102 k8s-worker2' | sudo tee -a /etc/hosts
+echo '192.168.10.2 k8s-worker1' | sudo tee -a /etc/hosts
+echo '192.168.10.3 k8s-worker2' | sudo tee -a /etc/hosts
 
 
 
