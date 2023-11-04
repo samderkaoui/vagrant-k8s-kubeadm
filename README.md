@@ -26,22 +26,22 @@ Ce dépot a pour vocation d'uniformiser nos process, partager nos connaissances 
 > * [Veille techno](#veille-techno-via-flux-rss)
 ---
 
-### Formation :
+### Formation
 + https://roadmap.sh/devops (roadmap pour savoir par ou commencer !)
 + https://xavki.blog/parcours-de-formation-devops/ (très bonnes vidéos/pédagogie)
 
-### Assistant IA :
+### Assistant IA
 + https://bard.google.com/?hl=fr
 + https://chat.openai.com/
 
-### Sécurisation linux :
+### Sécurisation linux
 + https://www.ssi.gouv.fr/uploads/2019/02/fr_np_linux_configuration-v2.0.pdf
 + https://complianceascode.github.io/content-pages/guides/index.html
 
-### GIT :
+### GIT
 + https://www.conventionalcommits.org/en/v1.0.0/ (norme de commit)
 
-### Veille techno via flux rss :
+### Veille techno via flux rss
 + https://feedly.com/
 
 ### Télécharger video linkedin learning en local
