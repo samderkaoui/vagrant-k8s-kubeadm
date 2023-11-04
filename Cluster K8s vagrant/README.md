@@ -1,8 +1,7 @@
 # K8S CLUSTER - ALMALINUX 9
 
-**[Tuto Install](https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/) • [Fork From](https://github.com/hfmartinez/kubernetes-vagrant)**
+**[Tuto Install](https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/)**
 
-![tag](https://img.shields.io/badge/VMware-231f20?style=for-the-badge&logo=VMware&logoColor=white)
 [![tag](https://img.shields.io/badge/VirtualBox-21416b?style=for-the-badge&logo=VirtualBox&logoColor=white)](https://www.google.fr)
 [![tag](https://img.shields.io/badge/Red%20Hat-EE0000?style=for-the-badge&logo=redhat&logoColor=white)](none)
 
