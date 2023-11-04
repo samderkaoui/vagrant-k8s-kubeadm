@@ -1,4 +1,4 @@
-# Procédure  
+### Procédure  
 
 1- Installer vagrant : https://developer.hashicorp.com/vagrant/downloads et vmware : https://www.vmware.com/fr/products/workstation-pro/workstation-pro-evaluation.html
 
@@ -38,3 +38,7 @@ NZ4RR-FTK5H-H81C1-Q30QH-1V2LA
 4Y09U-AJK97-089Z0-A3054-83KLA
 
 ```
+### Infos
+| os | id/pw
+|---| --- |
+| [almalinux/9](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant

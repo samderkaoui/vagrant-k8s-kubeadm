@@ -47,3 +47,7 @@ Ce dépot a pour vocation d'uniformiser nos process, partager nos connaissances 
 ### Télécharger video linkedin learning en local
 + https://github.com/knowbee/llvd
 
+### Infos
+| os | id/pw
+|---| --- |
+| [almalinux/9](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant

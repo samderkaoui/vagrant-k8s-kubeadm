@@ -1,4 +1,4 @@
-# Procédure  
+### Procédure  
 
 1- Installer vagrant : https://developer.hashicorp.com/vagrant/downloads et virtualbox : https://www.virtualbox.org/wiki/Downloads
 
@@ -9,4 +9,9 @@
 4- `Vagrant up`
 
 5- Done !
+
+### Infos
+| os | id/pw
+|---| --- |
+| [almalinux/9](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
 
