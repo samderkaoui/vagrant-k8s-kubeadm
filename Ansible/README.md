@@ -1,3 +1,8 @@
+# Ansible
+
+[![tag](https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white)](none)
+
+## Overview
 Ce dépôt montre un exemple de playbook faisant appel à un rôle. Ce rôle contient l'arborescence complète et les bases (variables, import de fichiers etc...).
 Dans le meme playbook il y a l'exemple d'un playbook simple utilisable directement sans faire appel au role.
 Les rôles permettent de découper une configuration complexe en composants plus petits et plus gérables. Cela facilite la maintenance et la compréhension du code.

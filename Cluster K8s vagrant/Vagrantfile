@@ -4,7 +4,7 @@
 Vagrant.configure(2) do |config|
 
   # Change to add more workers
-  NodeCount = 1
+  NodeCount = 2
   
   #global requirements
   config.vm.provision "shell", path: "requirements.sh", :args => NodeCount
