@@ -20,7 +20,6 @@ Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker 
 >   * [Ajout workers](#ajout-workers)
 >   * [Changer nom worker](#changement-nom-worker)
 > * [Recapitulatif Machines](#recapitulatif-machines)
-> * [Test en cours](#tests-en-cours)
 ---
 
 ## Installer cluster
