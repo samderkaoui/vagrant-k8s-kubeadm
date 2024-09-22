@@ -1,4 +1,4 @@
-# k8s cluster - ALMALINUX 9
+# vagrant-k8s-kubeadm - ALMALINUX 9
 
 **[Tuto Install](https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/)**
 
