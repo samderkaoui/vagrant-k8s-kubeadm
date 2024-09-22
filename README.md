@@ -1,4 +1,4 @@
-# K8S CLUSTER - ALMALINUX 9
+# k8s cluster - ALMALINUX 9
 
 **[Tuto Install](https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/)**
 
