@@ -52,6 +52,5 @@ Vagrant.configure(2) do |config|
 kubectl label nodes worker1 node-role.kubernetes.io/worker=worker
 ```
 
-## Recapitulatif Machines
-
-id/pw : vagrant/vagrant
+## Id/pw
+vagrant/vagrant
