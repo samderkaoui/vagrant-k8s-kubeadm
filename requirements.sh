@@ -1,6 +1,5 @@
 #!/bin/bash
 # Variables
-KUBE_VERSION="1.31.0" # Version stable vérifiée
 KUBE_REPO_VER="v1.35"
 
 echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
