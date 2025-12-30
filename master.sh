@@ -1,7 +1,6 @@
 #!/bin/bash
 calico_version="3.31.3"
 
-# TUTO https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/
 echo "[TASK 1] PREREQUIS"
 sudo firewall-cmd --permanent --add-port={6443,2379,2380,10250,10251,10252,10257,10259,179}/tcp
 sudo firewall-cmd --reload
