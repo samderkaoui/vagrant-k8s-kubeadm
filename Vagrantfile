@@ -7,6 +7,8 @@ WORKER_MEMORY = 2048
 WORKER_CPUS = 2
 LINKED_CLONE = false
 ALMA_VERSION = "9.3.20231118"
+IP_MASTER = "192.168.56.100"
+IP_WORKER_BASE = "192.168.56."
 
 Vagrant.configure(2) do |config|
 
@@ -14,8 +16,8 @@ Vagrant.configure(2) do |config|
 
 
 # Provisioning inline pour /etc/hosts sur TOUTES les machines
-  hosts_entries = "192.168.10.100 k8s-master\n"
-  (1..NodeCount).each { |i| hosts_entries += "192.168.10.#{i + 1} k8s-worker#{i}\n" }
+  hosts_entries = "#{IP_MASTER} k8s-master\n"
+  (1..NodeCount).each { |i| hosts_entries += "#{IP_WORKER_BASE}#{i + 1} k8s-worker#{i}\n" }
 
   config.vm.provision "shell", inline: <<-SHELL
     cat <<EOF >/etc/hosts
@@ -29,7 +31,7 @@ EOF
       node.vm.box = "almalinux/9"
       node.vm.box_version = ALMA_VERSION
       node.vm.hostname = "k8s-worker#{i}"
-      node.vm.network "private_network", ip: "192.168.10.#{i + 1}"  # worker1: .2, worker2: .3, etc.
+      node.vm.network "private_network", ip: "#{IP_WORKER_BASE}#{i + 1}" # worker1: .2, worker2: .3, etc.
       node.vm.provider "virtualbox" do |vb|
         vb.memory = WORKER_MEMORY
         vb.cpus = WORKER_CPUS
@@ -48,7 +50,7 @@ EOF
     master.vm.box = "almalinux/9"
     master.vm.box_version = ALMA_VERSION
     master.vm.hostname = "k8s-master"
-    master.vm.network "private_network", ip: "192.168.10.100"
+    master.vm.network "private_network", ip: IP_MASTER
     master.vm.provider "virtualbox" do |vb|
       vb.memory = MASTER_MEMORY
       vb.cpus = MASTER_CPUS
