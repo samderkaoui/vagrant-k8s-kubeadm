@@ -5,12 +5,24 @@ MASTER_MEMORY = 4096
 MASTER_CPUS = 2
 WORKER_MEMORY = 2048
 WORKER_CPUS = 2
-LINKED_CLONE = true
-ALMA_VERSION = 9.7.20251119
+LINKED_CLONE = false
+ALMA_VERSION = "9.3.20231118"
 
 Vagrant.configure(2) do |config|
 
   NodeCount = 2  # Changer ici pour ajouter des workers
+
+
+# Provisioning inline pour /etc/hosts sur TOUTES les machines
+  hosts_entries = "192.168.10.100 k8s-master\n"
+  (1..NodeCount).each { |i| hosts_entries += "192.168.10.#{i + 1} k8s-worker#{i}\n" }
+
+  config.vm.provision "shell", inline: <<-SHELL
+    cat <<EOF >/etc/hosts
+127.0.0.1 localhost
+#{hosts_entries}
+EOF
+  SHELL
   
   (1..NodeCount).each do |i|
     config.vm.define "worker#{i}" do |node|
@@ -46,14 +58,5 @@ Vagrant.configure(2) do |config|
     master.vm.provision "shell", path: "requirements.sh"
     master.vm.provision "shell", path: "master.sh"
   end
-  
-  # Provisioning inline pour /etc/hosts sur TOUTES les machines (automatique !)
-  hosts_entries = "192.168.10.100 k8s-master\n"
-  (1..NodeCount).each { |i| hosts_entries += "192.168.10.#{i + 1} k8s-worker#{i}\n" }
-  
-  config.vm.provision "shell", inline: <<-SHELL
-    cat <<EOF >/etc/hosts
-  127.0.0.1 localhost
-  #{hosts_entries}
-  EOF
-  SHELL
+
+end
