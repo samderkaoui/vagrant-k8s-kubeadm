@@ -1,4 +1,5 @@
 #!/bin/bash
+calico_version: 3.31.3
 # TUTO https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/
 echo "[TASK 1] PREREQUIS"
 sudo firewall-cmd --permanent --add-port={6443,2379,2380,10250,10251,10252,10257,10259,179}/tcp
@@ -17,9 +18,7 @@ chown -R vagrant:vagrant /home/vagrant/.kube
 
 
 echo "[TASK 4] DÉPLOYER LE RÉSEAU FLANNEL/CALICO"
-#su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
-# si je veux utiliser calico :
-su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.3/manifests/calico.yaml"
+su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/$calico_version/manifests/calico.yaml"
 
 
 echo "[TASK 5] GÉNÉRER ET ENREGISTRER LA COMMANDE DE REJOINDRE LE CLUSTER DANS /VAGRANT/JOINCLUSTER.SH"
