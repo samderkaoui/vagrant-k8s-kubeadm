@@ -43,11 +43,7 @@ Changer NodeCount dans le Vagrantfile
 ```ruby
 Vagrant.configure(2) do |config|
 
-  # Change to add more workers
-  NodeCount = 2
-  
-  #global requirements
-  config.vm.provision "shell", path: "requirements.sh", :args => NodeCount
+  NodeCount = 2  # Changer ici pour ajouter des workers
 ```
 
 
