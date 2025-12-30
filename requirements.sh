@@ -27,31 +27,24 @@ fi
 sudo systemctl restart sshd
 sudo yum update -y
 
-
-echo "[TACHE 2] MAJ FICHIER HOST"
-echo '192.168.10.100 k8s-master' | sudo tee -a /etc/hosts
-echo '192.168.10.2 k8s-worker1' | sudo tee -a /etc/hosts
-echo '192.168.10.3 k8s-worker2' | sudo tee -a /etc/hosts
-
-
-echo "[TACHE 3] CONFIGURER CONTAINER RUN TIME (CONTAINERD)"
+echo "[TACHE 2] CONFIGURER CONTAINER RUN TIME (CONTAINERD)"
 containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
 sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
 sudo systemctl enable containerd
 
 
-echo "[TACHE 4] DISABLE SWAP"
+echo "[TACHE 3] DISABLE SWAP"
 sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
 
-echo "[TACHE 5] SELINUX PERMISSIVE"
+echo "[TACHE 4] SELINUX PERMISSIVE"
 sudo setenforce 0
 sudo sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux
 
 
-echo "[TACHE 6] AJOUTER DES MODULES ET DES PARAMÈTRES DU KERNEL"
+echo "[TACHE 5] AJOUTER DES MODULES ET DES PARAMÈTRES DU KERNEL"
 sudo tee /etc/modules-load.d/containerd.conf <<EOF
 overlay
 br_netfilter
@@ -60,7 +53,7 @@ sudo modprobe overlay
 sudo modprobe br_netfilter
 
 
-echo "[TASK 7] Add sysctl settings & apply"
+echo "[TASK 6] Add sysctl settings & apply"
 cat >>/etc/sysctl.d/kubernetes.conf<<EOF
 net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
@@ -69,18 +62,18 @@ EOF
 sysctl --system >/dev/null 2>&1
 
 
-echo "[TACHE 8] AJOUT K8S REPO"
+echo "[TACHE 7] AJOUT K8S REPO"
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
-baseurl=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/
 enabled=1
 gpgcheck=1
-gpgkey=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/repodata/repomd.xml.key
 EOF
 
 
-echo "[TASK 9] INSTALLER KUBERNETES KUBEADM, KUBELET ET KUBECTL"
+echo "[TASK 8] INSTALLER KUBERNETES KUBEADM, KUBELET ET KUBECTL"
 dnf install -y kubelet-$KUBE_VERSION kubeadm-$KUBE_VERSION kubectl-$KUBE_VERSION --disableexcludes=kubernetes
 
 
