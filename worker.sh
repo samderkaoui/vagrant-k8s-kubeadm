@@ -1,5 +1,5 @@
 #!/bin/bash
-# TUTO https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/
+
 echo "[TASK 1] PREREQUIS"
 sudo firewall-cmd --permanent --add-port={179,10250,30000-32767}/tcp
 sudo firewall-cmd --reload
