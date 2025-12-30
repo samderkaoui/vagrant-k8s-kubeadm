@@ -50,9 +50,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "requirements.sh", :args => NodeCount
 ```
 
-!!!!! Pensez à modifier fichier `requirement.sh` en conséquence !!!!!
-
-![harbor](img/requierement.png)
 
 ### Changement nom worker
 ```bash
