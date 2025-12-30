@@ -19,7 +19,7 @@ chown -R vagrant:vagrant /home/vagrant/.kube
 
 
 echo "[TASK 4] DÉPLOYER LE RÉSEAU FLANNEL/CALICO"
-su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/$calico_version/manifests/calico.yaml"
+su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v$calico_version/manifests/calico.yaml"
 
 
 echo "[TASK 5] GÉNÉRER ET ENREGISTRER LA COMMANDE DE REJOINDRE LE CLUSTER DANS /VAGRANT/JOINCLUSTER.SH"
