@@ -26,6 +26,22 @@ Vagrant.configure(2) do |config|
 EOF
   SHELL
   
+  # Définition du master
+  config.vm.define "master" do |master|
+    master.vm.box = "almalinux/9"
+    master.vm.box_version = ALMA_VERSION
+    master.vm.hostname = "k8s-master"
+    master.vm.network "private_network", ip: IP_MASTER
+    master.vm.provider "virtualbox" do |vb|
+      vb.memory = MASTER_MEMORY
+      vb.cpus = MASTER_CPUS
+      vb.linked_clone = LINKED_CLONE
+    end
+  
+    master.vm.provision "shell", path: "requirements.sh"
+    master.vm.provision "shell", path: "master.sh"
+  end
+  
   (1..NodeCount).each do |i|
     config.vm.define "worker#{i}" do |node|
       node.vm.box = "almalinux/9"
@@ -44,21 +60,5 @@ EOF
     end
   end
 
-
-  # Définition du master
-  config.vm.define "master" do |master|
-    master.vm.box = "almalinux/9"
-    master.vm.box_version = ALMA_VERSION
-    master.vm.hostname = "k8s-master"
-    master.vm.network "private_network", ip: IP_MASTER
-    master.vm.provider "virtualbox" do |vb|
-      vb.memory = MASTER_MEMORY
-      vb.cpus = MASTER_CPUS
-      vb.linked_clone = LINKED_CLONE
-    end
-  
-    master.vm.provision "shell", path: "requirements.sh"
-    master.vm.provision "shell", path: "master.sh"
-  end
 
 end
