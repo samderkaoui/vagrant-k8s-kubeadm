@@ -1,6 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+MASTER_MEMORY = 4096  # Augmente à 4 Go si possible
+MASTER_CPUS = 2
+WORKER_MEMORY = 2048
+WORKER_CPUS = 2
+
 Vagrant.configure(2) do |config|
 
   NodeCount = 2  # Changer ici pour ajouter des workers
@@ -11,8 +16,8 @@ Vagrant.configure(2) do |config|
       node.vm.hostname = "k8s-worker#{i}"
       node.vm.network "private_network", ip: "192.168.10.#{i + 1}"  # worker1: .2, worker2: .3, etc.
       node.vm.provider "virtualbox" do |vb|
-        vb.memory = 2048
-        vb.cpus = 2
+        vb.memory = MASTER_MEMORY
+        vb.cpus = MASTER_CPUS
       end
   
       # Provisioning commun
@@ -29,8 +34,8 @@ Vagrant.configure(2) do |config|
     master.vm.hostname = "k8s-master"
     master.vm.network "private_network", ip: "192.168.10.100"
     master.vm.provider "virtualbox" do |vb|
-      vb.memory = 2048
-      vb.cpus = 2
+      vb.memory = MASTER_MEMORY
+      vb.cpus = MASTER_CPUS
     end
   
     master.vm.provision "shell", path: "requirements.sh"
