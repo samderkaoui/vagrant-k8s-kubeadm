@@ -53,8 +53,5 @@ kubectl label nodes worker1 node-role.kubernetes.io/worker=worker
 ```
 
 ## Recapitulatif Machines
-| name | ip | memory | core | disk | os | id/pw
-|---| --- | --- | --- | --- | --- | ---
-|k8s-master| 192.168.10.100  | 2048 | 2 | 33 | [Almalinux 9.2 x64](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
-|k8s-worker1| 192.168.10.2  | 2048 | 2 | 47 | [Almalinux 9.2 x64](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
-|k8s-worker2| 192.168.10.3  | 2048 | 2 | 47 | [Almalinux 9.2 x64](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
+
+id/pw : vagrant/vagrant
