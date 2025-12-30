@@ -1,8 +1,5 @@
 #!/bin/bash
-
-# TUTO https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/
 # Variables
-USER_NAME="vagrant"
 KUBE_VERSION="1.35.0"  # Ou la dernière stable : vérifier sur kubernetes.io
 
 echo "[TACHE 1] PREREQUIS (paquets , ssh sans clé, update)"
