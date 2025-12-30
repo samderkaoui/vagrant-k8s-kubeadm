@@ -3,7 +3,8 @@
 KUBE_VERSION="1.35.0"  # Ou la dernière stable : vérifier sur kubernetes.io
 
 echo "[TACHE 1] PREREQUIS (paquets , ssh sans clé, update)"
-sudo yum install firewalld wget curl vim -y
+# sudo dnf update -y
+sudo dnf install firewalld wget curl vim -y
 sudo systemctl start firewalld 
 sudo systemctl enable firewalld
 sudo firewall-cmd --permanent --add-port=22/tcp
@@ -22,7 +23,6 @@ fi
 
 # Redémarrez le service SSH
 sudo systemctl restart sshd
-sudo yum update -y
 
 echo "[TACHE 2] CONFIGURER CONTAINER RUN TIME (CONTAINERD)"
 containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
@@ -60,7 +60,7 @@ sysctl --system >/dev/null 2>&1
 
 
 echo "[TACHE 7] AJOUT K8S REPO"
-cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+cat <<EOF | sudo tee /etc/dnf.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=https://pkgs.k8s.io/core:/stable:/v1.35/rpm/

@@ -1,6 +1,7 @@
 #!/bin/bash
 # Variables
 CALICO_VERSION="3.31.3"
+IP_MASTER="192.168.56.100"
 
 echo "[TASK 1] PREREQUIS"
 sudo firewall-cmd --permanent --add-port={6443,2379,2380,10250,10251,10252,10257,10259,179}/tcp
@@ -8,7 +9,7 @@ sudo firewall-cmd --reload
 
 
 echo "[TASK 2] INITIALISER LE CLUSTER KUBERNETES"
-kubeadm init --apiserver-advertise-address=192.168.10.100 --pod-network-cidr=10.244.0.0/16 >> /root/kubeinit.log 2>/dev/null
+kubeadm init --apiserver-advertise-address=$IP_MASTER --pod-network-cidr=10.244.0.0/16 >> /root/kubeinit.log 2>/dev/null
 
 
 echo "[TASK 3] COPIER LA CONFIGURATION D'ADMIN KUBE DANS LE RÉPERTOIRE .kube DE L'UTILISATEUR VAGRANT"
