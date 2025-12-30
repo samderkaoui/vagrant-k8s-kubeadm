@@ -5,6 +5,7 @@ MASTER_MEMORY = 4096  # Augmente à 4 Go si possible
 MASTER_CPUS = 2
 WORKER_MEMORY = 2048
 WORKER_CPUS = 2
+LINKED_CLONE = true
 
 Vagrant.configure(2) do |config|
 
@@ -16,18 +17,18 @@ Vagrant.configure(2) do |config|
       node.vm.hostname = "k8s-worker#{i}"
       node.vm.network "private_network", ip: "192.168.10.#{i + 1}"  # worker1: .2, worker2: .3, etc.
       node.vm.provider "virtualbox" do |vb|
-        vb.memory = MASTER_MEMORY
-        vb.cpus = MASTER_CPUS
+        vb.memory = WORKER_MEMORY
+        vb.cpus = WORKER_CPUS
+        vb.linked_clone = LINKED_CLONE
       end
-  
       # Provisioning commun
       node.vm.provision "shell", path: "requirements.sh"
-  
       # Provisioning spécifique worker
       node.vm.provision "shell", path: "worker.sh"
     end
   end
-  
+
+
   # Définition du master
   config.vm.define "master" do |master|
     master.vm.box = "almalinux/9"
@@ -36,6 +37,7 @@ Vagrant.configure(2) do |config|
     master.vm.provider "virtualbox" do |vb|
       vb.memory = MASTER_MEMORY
       vb.cpus = MASTER_CPUS
+      vb.linked_clone = LINKED_CLONE
     end
   
     master.vm.provision "shell", path: "requirements.sh"
