@@ -12,7 +12,7 @@ IP_WORKER_BASE = "192.168.56."
 
 Vagrant.configure(2) do |config|
 
-  NodeCount = 2 # Changer ici pour ajouter des workers
+  NodeCount = 1 # Changer ici pour ajouter des workers
 
 
 # Provisioning inline pour /etc/hosts sur TOUTES les machines
@@ -25,6 +25,8 @@ Vagrant.configure(2) do |config|
 #{hosts_entries}
 EOF
   SHELL
+
+  config.vm.provision "shell", path: "requirements.sh", privileged: true
   
   # Définition du master
   config.vm.define "master" do |master|
@@ -37,8 +39,6 @@ EOF
       vb.cpus = MASTER_CPUS
       vb.linked_clone = LINKED_CLONE
     end
-  
-    master.vm.provision "shell", path: "requirements.sh", privileged: true
     master.vm.provision "shell", path: "master.sh", privileged: true
   end
   
@@ -53,9 +53,6 @@ EOF
         vb.cpus = WORKER_CPUS
         vb.linked_clone = LINKED_CLONE
       end
-      # Provisioning commun
-      node.vm.provision "shell", path: "requirements.sh", privileged: true
-      # Provisioning spécifique worker
       node.vm.provision "shell", path: "worker.sh", privileged: true
     end
   end

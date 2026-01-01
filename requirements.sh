@@ -3,7 +3,7 @@
 KUBE_REPO_VER="v1.35"
 
 echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
-#sudo dnf update -y
+sudo dnf update -y
 sudo dnf install -y dnf-utils
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf install firewalld wget curl vim containerd -y
