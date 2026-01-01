@@ -7,9 +7,11 @@ echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
 sudo rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
 sudo dnf upgrade -y almalinux-release
 sudo dnf install -y dnf-utils
-sudo dnf clean all
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf install wget curl vim containerd.io container-selinux -y
+sudo dnf clean all
+
+
 sudo systemctl disable --now firewalld
 sudo systemctl stop firewalld
 #sudo dnf install -y firewalld

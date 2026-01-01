@@ -5,11 +5,11 @@
 `badges : https://gist.github.com/kimjisub/360ea6fc43b82baaf7193175fd12d2f7`
 
 ---
-
+[![tag](https://img.shields.io/badge/-Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)](none)
 [![tag](https://img.shields.io/badge/-VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white)](none)
 [![Vagrant](https://img.shields.io/badge/-Vagrant-1868F2?style=flat&logo=vagrant&logoColor=white)](none)
 [![tag](https://img.shields.io/badge/-Shell-FFD500?style=flat&logo=shell&logoColor=white)](none)
-[![tag](https://img.shields.io/badge/-AlmaLinux-000000?style=flat&logo=almalinux&logoColor=white")](none)
+[![tag](https://img.shields.io/badge/-AlmaLinux-000000?style=flat&logo=almalinux&logoColor=white)](none)
 ## Overview
 
 Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker à definir.
@@ -18,8 +18,10 @@ Status du projet :
 
 - [x] Distribution : Almalinux 8.8
   - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
-  - [x] Utilisation de Calico v **(3.31.3)**
+  - [x] Utilisation de Flannel (calico erreur avec interface Virtualbox flemme de creuser => Cilium alma9 :) )
   - [x] Désactivation firewalld
+  - [x] Ajout Métrics server
+  - [x] Ajout dans script master pour Un-Taint node master
   - [ ] Choisir un Gateway (Ingress trop vieux, on passe à la Gateway API ! 🚀) => [![tag](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=Istio&logoColor=white)](none)
 
 - TO DO
