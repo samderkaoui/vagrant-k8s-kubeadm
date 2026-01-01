@@ -18,7 +18,7 @@ Status du projet :
   - [x] Utilisation de Calico v **(3.31.3)**
 
 To do 
-  - [] Basculer vers cilium (plus rapide, eBPF etc)
+  - [ ] Basculer vers cilium (plus rapide, eBPF etc)
 ---
 
 > **Table of Contents**:
