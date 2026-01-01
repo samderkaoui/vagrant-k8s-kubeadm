@@ -8,7 +8,7 @@ sudo dnf install -y dnf-utils
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf install firewalld wget curl vim containerd -y
 sudo systemctl enable --now firewalld
-sudo firewall-cmd --permanent --add-port=22/tcp
+sudo firewall-cmd --permanent --add-service=ssh
 sudo firewall-cmd --reload
 
 
@@ -60,3 +60,6 @@ echo "[TACHE 6] INSTALLER KUBEADM, KUBELET, KUBECTL"
 # On utilise dnf install sans les versions si on veut la toute dernière du repo
 sudo dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
+
+echo "[TACHE 7] SLEEP 20s"
+sleep 20
