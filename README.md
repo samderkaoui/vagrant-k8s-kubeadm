@@ -16,6 +16,7 @@ Status du projet :
 - [x] Distribution : Almalinux 8.8
   - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
   - [x] Utilisation de Calico v **(3.31.3)**
+  - [x] Désactivation firewalld
 
 - TO DO
 - [ ] Distribution : Almalinux 9 (car Cilium a besoin du Kernel 5 et Almalinux 8 est en 4.x)

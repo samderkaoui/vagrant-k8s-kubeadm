@@ -9,12 +9,16 @@ sudo dnf upgrade -y almalinux-release
 sudo dnf install -y dnf-utils
 sudo dnf clean all
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install firewalld wget curl vim containerd.io container-selinux -y
-sudo systemctl enable --now firewalld
+sudo dnf install wget curl vim containerd.io container-selinux -y
+sudo systemctl disable --now firewalld
+sudo systemctl stop firewalld
+#sudo dnf install -y firewalld
+#sudo systemctl enable --now firewalld
+#sudo firewall-cmd --permanent --add-service=ssh
+#sudo firewall-cmd --reload
 sudo systemctl start containerd
 sudo systemctl enable containerd
-sudo firewall-cmd --permanent --add-service=ssh
-sudo firewall-cmd --reload
+
 
 
 echo "[TACHE 2] MODULES KERNEL ET SYSCTL (Indispensable avant containerd)"

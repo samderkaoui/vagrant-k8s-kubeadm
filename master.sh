@@ -3,10 +3,10 @@
 CALICO_VERSION="3.31.3"
 IP_MASTER="192.168.56.100"
 
-echo "[TACHE 1] PREREQUIS"
-sudo firewall-cmd --permanent --add-service=ssh
-sudo firewall-cmd --permanent --add-port={6443,2379,2380,10250,10251,10252,10257,10259,179}/tcp
-sudo firewall-cmd --reload
+#echo "[TACHE 1] PREREQUIS FIREWALLD"
+#sudo firewall-cmd --permanent --add-service=ssh
+#sudo firewall-cmd --permanent --add-port={6443,2379,2380,10250,10251,10252,10257,10259,179}/tcp
+#sudo firewall-cmd --reload
 
 
 echo "[TACHE 2] INITIALISER LE CLUSTER KUBERNETES"
