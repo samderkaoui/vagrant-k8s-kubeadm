@@ -12,7 +12,7 @@ IP_WORKER_BASE = "192.168.56."
 
 Vagrant.configure(2) do |config|
 
-  NodeCount = 1 # Changer ici pour ajouter des workers
+  NodeCount = 0 # Changer ici pour ajouter des workers
 
 
 # Provisioning inline pour /etc/hosts sur TOUTES les machines

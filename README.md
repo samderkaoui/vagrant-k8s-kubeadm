@@ -20,6 +20,8 @@ Status du projet :
   - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
   - [x] Utilisation de Calico v **(3.31.3)**
   - [x] Désactivation firewalld
+  - [ ] Ajout Métrics server `kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml`
+  - [ ] Ajout dans script master pour Un Taint node master `kubectl taint nodes k8s-master node-role.kubernetes.io/control-plane:NoSchedule-`
   - [ ] Choisir un Gateway (Ingress trop vieux, on passe à la Gateway API ! 🚀) => [![tag](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=Istio&logoColor=white)](none)
 
 - TO DO
