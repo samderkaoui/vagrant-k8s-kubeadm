@@ -1,6 +1,6 @@
 #!/bin/bash
 # Variables
-KUBE_REPO_VER="v1.35"
+KUBE_REPO_VER="v1.30" # cgroup v1 car almalinux 8 , sinon passer a v 1.31+ avec alma9/10
 
 echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
 #sudo dnf update -y
@@ -9,8 +9,10 @@ sudo dnf upgrade -y almalinux-release
 sudo dnf install -y dnf-utils
 sudo dnf clean all
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install firewalld wget curl vim containerd container-selinux -y
+sudo dnf install firewalld wget curl vim containerd.io container-selinux -y
 sudo systemctl enable --now firewalld
+sudo systemctl start containerd
+sudo systemctl enable containerd
 sudo firewall-cmd --permanent --add-service=ssh
 sudo firewall-cmd --reload
 
@@ -37,7 +39,6 @@ containerd config default | sudo tee /etc/containerd/config.toml >/dev/null
 # Activation du support Systemd pour les Cgroups
 sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
-sudo systemctl enable containerd
 
 
 echo "[TACHE 4] DISABLE SWAP & SELINUX"

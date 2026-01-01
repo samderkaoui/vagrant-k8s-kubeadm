@@ -10,7 +10,11 @@ sudo firewall-cmd --reload
 
 
 echo "[TACHE 2] INITIALISER LE CLUSTER KUBERNETES"
-kubeadm init --apiserver-advertise-address=$IP_MASTER --pod-network-cidr=10.244.0.0/16 >> /root/kubeinit.log 2>/dev/null
+sudo kubeadm init \
+  --apiserver-advertise-address=$IP_MASTER \
+  --pod-network-cidr=192.168.0.0/16 \
+  --cri-socket=unix:///var/run/containerd.sock \
+  | tee /root/kubeinit.log
 
 
 echo "[TACHE 3] COPIER LA CONFIGURATION D'ADMIN KUBE DANS LE RÉPERTOIRE .kube DE L'UTILISATEUR VAGRANT"
