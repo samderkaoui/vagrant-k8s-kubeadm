@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-MASTER_MEMORY = 4096
+MASTER_MEMORY = 2048
 MASTER_CPUS = 2
 WORKER_MEMORY = 2048
 WORKER_CPUS = 2

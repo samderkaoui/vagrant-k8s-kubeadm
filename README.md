@@ -1,12 +1,15 @@
 # vagrant-k8s-kubeadm - ALMALINUX 9
 
-**[Tuto Install](https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/)**
+`tuto install : https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/`
 
-[![tag](https://img.shields.io/badge/VirtualBox-21416b?style=for-the-badge&logo=VirtualBox&logoColor=white)](https://www.google.fr)
-[![tag](https://img.shields.io/badge/Red%20Hat-EE0000?style=for-the-badge&logo=redhat&logoColor=white)](none)
-[![Vagrant](https://img.shields.io/badge/Vagrant-1868F2?style=for-the-badge&logo=Vagrant&logoColor=white)](none)
-![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+`badges : https://gist.github.com/kimjisub/360ea6fc43b82baaf7193175fd12d2f7`
 
+---
+
+[![tag](https://img.shields.io/badge/-VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white)](none)
+[![Vagrant](https://img.shields.io/badge/-Vagrant-1868F2?style=flat&logo=vagrant&logoColor=white)](none)
+[![tag](https://img.shields.io/badge/-Shell-FFD500?style=flat&logo=shell&logoColor=white)](none)
+[![tag](https://img.shields.io/badge/-AlmaLinux-000000?style=flat&logo=almalinux&logoColor=white")](none)
 ## Overview
 
 Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker à definir.
@@ -17,6 +20,7 @@ Status du projet :
   - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
   - [x] Utilisation de Calico v **(3.31.3)**
   - [x] Désactivation firewalld
+  - [ ] Choisir un Gateway (Ingress trop vieux, on passe à la Gateway API ! 🚀) => [![tag](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=Istio&logoColor=white)](none)
 
 - TO DO
 - [ ] Distribution : Almalinux 9 (car Cilium a besoin du Kernel 5 et Almalinux 8 est en 4.x)
