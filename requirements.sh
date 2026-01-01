@@ -3,10 +3,13 @@
 KUBE_REPO_VER="v1.35"
 
 echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
-sudo dnf update -y
+#sudo dnf update -y
+sudo rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
+sudo dnf upgrade -y almalinux-release
 sudo dnf install -y dnf-utils
+sudo dnf clean all
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install firewalld wget curl vim containerd -y
+sudo dnf install firewalld wget curl vim containerd container-selinux -y
 sudo systemctl enable --now firewalld
 sudo firewall-cmd --permanent --add-service=ssh
 sudo firewall-cmd --reload
