@@ -10,20 +10,15 @@ sudo firewall-cmd --reload
 
 
 echo "[TACHE 2] INITIALISER LE CLUSTER KUBERNETES"
-sudo kubeadm init \
-  --apiserver-advertise-address=$IP_MASTER \
-  --pod-network-cidr=192.168.0.0/16 \
-  --cri-socket=unix:///var/run/containerd.sock \
-  | tee /root/kubeinit.log
-
+sudo kubeadm init --apiserver-advertise-address=$IP_MASTER --pod-network-cidr=192.168.0.0/16 --cri-socket=unix:///run/containerd/containerd.sock --v=4
 
 echo "[TACHE 3] COPIER LA CONFIGURATION D'ADMIN KUBE DANS LE RÉPERTOIRE .kube DE L'UTILISATEUR VAGRANT"
 mkdir /home/vagrant/.kube
-cp /etc/kubernetes/admin.conf /home/vagrant/.kube/config
+sudo cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
 chown -R vagrant:vagrant /home/vagrant/.kube
 
 
-echo "[TACHE 4] DÉPLOYER LE RÉSEAU FLANNEL/CALICO"
+echo "[TACHE 4] DÉPLOYER LE RÉSEAU CALICO"
 su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v$CALICO_VERSION/manifests/calico.yaml"
 
 

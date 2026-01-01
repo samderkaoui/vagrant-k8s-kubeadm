@@ -9,10 +9,16 @@
 
 ## Overview
 
-Project status: OK
+Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker à definir.
 
-Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker à definir. (Penser a configurer le Vagrantfile et le Requirements.sh pour le fichier hosts)
+Status du projet :
 
+- [x] Compatible Almalinux 8
+  - [x] Latest version de kubernetes supporté par la distribution  testé et validé car cgroups v1 **(1.30)**
+  - [x] Utilisation de Calico v **(3.31.3)**
+
+To do 
+  - [] Basculer vers cilium (plus rapide, eBPF etc)
 ---
 
 > **Table of Contents**:
