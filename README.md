@@ -14,11 +14,11 @@ Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker 
 Status du projet :
 
 - [x] Compatible Almalinux 8
-  - [x] Latest version de kubernetes supporté par la distribution  testé et validé car cgroups v1 **(1.30)**
+  - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
   - [x] Utilisation de Calico v **(3.31.3)**
 
 To do 
-  - [ ] Basculer vers cilium (plus rapide, eBPF etc)
+  - [ ] Basculer de Calico vers Cilium pour passer à une architecture eBPF plus légère et performante : cela réduit l'overhead système en remplaçant kube-proxy et permettra de supprimer les lenteurs d'iptables, obtenir une visibilité totale sur le trafic avec Hubble et de sécuriser les flux au niveau applicatif (L7) plutôt que par simples adresses IP
 ---
 
 > **Table of Contents**:
