@@ -38,8 +38,13 @@ vagrant up
 ```
 
 ```bash
-# vérifier que tout est ok sur master / ou juste faire depuis master 'kubectl get nodes -o wide'
-vagrant ssh master -c 'kubectl get nodes -o wide'
+# Régler soucis de DHCP sur Virtualbox
+1- Ouvre VirtualBox GUI sur ton host (Ubuntu).
+2- Va dans File → Host Network Manager (ou Preferences → Network sur certaines versions).
+3- Sélectionne l'interface vboxnet0 (celle avec 192.168.56.1).
+4- Clique sur l'onglet DHCP Server.
+5- Décoche "Enable Server" (désactive le DHCP).
+6- Applique (OK).
 ```
 
 ## Configuration
