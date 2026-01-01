@@ -18,7 +18,7 @@ Status du projet :
   - [x] Utilisation de Calico v **(3.31.3)**
 
 - TO DO
-- [ ] Distribution : Almalinux 9
+- [ ] Distribution : Almalinux 9 (car Cilium a besoin du Kernel 5 et Almalinux 8 est en 4.x)
   - [ ] Basculer de Calico vers Cilium pour passer à une architecture eBPF plus légère et performante : cela réduit l'overhead système en remplaçant kube-proxy et permettra de supprimer les lenteurs d'iptables, obtenir une visibilité totale sur le trafic avec Hubble et de sécuriser les flux au niveau applicatif (L7) plutôt que par simples adresses IP
 ---
 
