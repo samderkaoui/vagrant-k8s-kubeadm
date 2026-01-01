@@ -13,7 +13,7 @@ Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker 
 
 Status du projet :
 
-- [x] Distribution : Almalinux 8
+- [x] Distribution : Almalinux 8.8
   - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
   - [x] Utilisation de Calico v **(3.31.3)**
 
