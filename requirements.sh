@@ -1,108 +1,73 @@
 #!/bin/bash
-
-# TUTO https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/
 # Variables
-USER_NAME="vagrant"
+KUBE_REPO_VER="v1.30" # cgroup v1 car almalinux 8 , sinon passer a v 1.31+ avec alma9/10
 
-echo "[TACHE 1] PREREQUIS (paquets , ssh sans clé, update)"
-
-sudo yum install firewalld wget curl vim -y
-sudo systemctl start firewalld 
-sudo systemctl enable firewalld
-sudo firewall-cmd --permanent --add-port=22/tcp
-sudo firewall-cmd --reload
-
-
-# Vérifiez si "#PasswordAuthentication no" ou "#PasswordAuthentication yes" est présent dans le fichier pour se connecter en ssh via mot de passe
-if grep -q "^#PasswordAuthentication no" /etc/ssh/sshd_config; then
-    sed -i 's/^#PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-    echo "Modification effectuée pour remplacer '#PasswordAuthentication no' par 'PasswordAuthentication yes'."
-elif grep -q "^#PasswordAuthentication yes" /etc/ssh/sshd_config; then
-    sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-    echo "Modification effectuée pour remplacer '#PasswordAuthentication yes' par 'PasswordAuthentication yes2'."
-else
-    echo "Aucune des lignes spécifiées n'a été trouvée ou la modification a déjà été effectuée."
-fi
-
-# Redémarrez le service SSH
-sudo systemctl restart sshd
-sudo yum update -y
-
-
-
-
-
-echo "[TACHE 2] MAJ FICHIER HOST"
-echo '192.168.10.100 k8s-master' | sudo tee -a /etc/hosts
-echo '192.168.10.2 k8s-worker1' | sudo tee -a /etc/hosts
-echo '192.168.10.3 k8s-worker2' | sudo tee -a /etc/hosts
-
-
-echo "[TACHE 3] CONFIGURER CONTAINER RUN TIME (CONTAINERD)"
-containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
-sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
-
-sudo systemctl restart containerd
+echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
+#sudo dnf update -y
+sudo rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
+sudo dnf upgrade -y almalinux-release
+sudo dnf install -y dnf-utils
+sudo dnf clean all
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf install wget curl vim containerd.io container-selinux -y
+sudo systemctl disable --now firewalld
+sudo systemctl stop firewalld
+#sudo dnf install -y firewalld
+#sudo systemctl enable --now firewalld
+#sudo firewall-cmd --permanent --add-service=ssh
+#sudo firewall-cmd --reload
+sudo systemctl start containerd
 sudo systemctl enable containerd
 
 
 
-echo "[TACHE 4] DISABLE SWAP"
-sudo swapoff -a
-sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-
-
-
-echo "[TACHE 5] SELINUX PERMISSIVE"
-sudo setenforce 0
-sudo sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux
-
-
-
-echo "[TACHE 6] AJOUTER DES MODULES ET DES PARAMÈTRES DU KERNEL"
-sudo tee /etc/modules-load.d/containerd.conf <<EOF
+echo "[TACHE 2] MODULES KERNEL ET SYSCTL (Indispensable avant containerd)"
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
 EOF
 sudo modprobe overlay
 sudo modprobe br_netfilter
 
-
-echo "[TASK 7] Add sysctl settings & apply"
-cat >>/etc/sysctl.d/kubernetes.conf<<EOF
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
-net.bridge.bridge-nf-call-iptables = 1
 EOF
-
-sysctl --system >/dev/null 2>&1
-
+sudo sysctl --system >/dev/null 2>&1
 
 
+echo "[TACHE 3] CONFIGURER CONTAINER RUNTIME (CONTAINERD)"
+mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml >/dev/null
+# Activation du support Systemd pour les Cgroups
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
+sudo systemctl restart containerd
 
-echo "[TACHE 8] AJOUT K8S REPO"
-cat <<EOF | sudo tee /etc/yum.repos.d/k8srpm.repo
-[k8s]
-name=k8s
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+
+echo "[TACHE 4] DISABLE SWAP & SELINUX"
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo setenforce 0
+sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux
+
+
+echo "[TACHE 5] AJOUT K8S REPO"
+# Note l'utilisation de KUBE_REPO_VER pour le chemin de l'URL
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/${KUBE_REPO_VER}/rpm/
 enabled=1
 gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-exclude=kubelet kubeadm kubectl
+gpgkey=https://pkgs.k8s.io/core:/stable:/${KUBE_REPO_VER}/rpm/repodata/repomd.xml.key
 EOF
-# Les paquets kubelet kubeadm et kubectl
-#  sont exclus afin d’éviter tout update ultérieure non intentionnelle.
 
 
+echo "[TACHE 6] INSTALLER KUBEADM, KUBELET, KUBECTL"
+# On utilise dnf install sans les versions si on veut la toute dernière du repo
+sudo dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+sudo systemctl enable --now kubelet
 
-echo "[TASK 9] INSTALLER KUBERNETES KUBEADM, KUBELET ET KUBECTL"
-sudo yum install -y kubelet kubeadm kubectl --disableexcludes=k8s
-
-
-
-echo "[TASK 10] ACTIVER ET DÉMARRER LE SERVICE KUBELET"
-systemctl enable kubelet >/dev/null 2>&1
-systemctl start kubelet >/dev/null 2>&1
-
-
+echo "[TACHE 7] SLEEP 20s"
+sleep 20

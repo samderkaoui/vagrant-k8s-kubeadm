@@ -1,18 +1,30 @@
 # vagrant-k8s-kubeadm - ALMALINUX 9
 
-**[Tuto Install](https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/)**
+`tuto install : https://www.linuxtechi.com/install-kubernetes-on-rockylinux-almalinux/`
 
-[![tag](https://img.shields.io/badge/VirtualBox-21416b?style=for-the-badge&logo=VirtualBox&logoColor=white)](https://www.google.fr)
-[![tag](https://img.shields.io/badge/Red%20Hat-EE0000?style=for-the-badge&logo=redhat&logoColor=white)](none)
-[![Vagrant](https://img.shields.io/badge/Vagrant-1868F2?style=for-the-badge&logo=Vagrant&logoColor=white)](none)
-![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+`badges : https://gist.github.com/kimjisub/360ea6fc43b82baaf7193175fd12d2f7`
 
+---
+
+[![tag](https://img.shields.io/badge/-VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white)](none)
+[![Vagrant](https://img.shields.io/badge/-Vagrant-1868F2?style=flat&logo=vagrant&logoColor=white)](none)
+[![tag](https://img.shields.io/badge/-Shell-FFD500?style=flat&logo=shell&logoColor=white)](none)
+[![tag](https://img.shields.io/badge/-AlmaLinux-000000?style=flat&logo=almalinux&logoColor=white")](none)
 ## Overview
 
-Project status: OK
+Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker à definir.
 
-Ce projet vise l'installation d'un cluster complet K8s avec un nombre de worker à definir. (Penser a configurer le Vagrantfile et le Requirements.sh pour le fichier hosts)
+Status du projet :
 
+- [x] Distribution : Almalinux 8.8
+  - [x] Latest version de kubernetes **(1.30)** supporté par la distribution (car cgroups v1)
+  - [x] Utilisation de Calico v **(3.31.3)**
+  - [x] Désactivation firewalld
+  - [ ] Choisir un Gateway (Ingress trop vieux, on passe à la Gateway API ! 🚀) => [![tag](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=Istio&logoColor=white)](none)
+
+- TO DO
+- [ ] Distribution : Almalinux 9 (car Cilium a besoin du Kernel 5 et Almalinux 8 est en 4.x)
+  - [ ] Basculer de Calico vers Cilium pour passer à une architecture eBPF plus légère et performante : cela réduit l'overhead système en remplaçant kube-proxy et permettra de supprimer les lenteurs d'iptables, obtenir une visibilité totale sur le trafic avec Hubble et de sécuriser les flux au niveau applicatif (L7) plutôt que par simples adresses IP
 ---
 
 > **Table of Contents**:
@@ -31,8 +43,13 @@ vagrant up
 ```
 
 ```bash
-# vérifier que tout est ok sur master / ou juste faire depuis master 'kubectl get nodes -o wide'
-vagrant ssh master -c 'kubectl get nodes -o wide'
+# Régler soucis de DHCP sur Virtualbox
+1- Ouvre VirtualBox GUI sur ton host (Ubuntu).
+2- Va dans File → Host Network Manager (ou Preferences → Network sur certaines versions).
+3- Sélectionne l'interface vboxnet0 (celle avec 192.168.56.1).
+4- Clique sur l'onglet DHCP Server.
+5- Décoche "Enable Server" (désactive le DHCP).
+6- Applique (OK).
 ```
 
 ## Configuration
@@ -43,25 +60,14 @@ Changer NodeCount dans le Vagrantfile
 ```ruby
 Vagrant.configure(2) do |config|
 
-  # Change to add more workers
-  NodeCount = 2
-  
-  #global requirements
-  config.vm.provision "shell", path: "requirements.sh", :args => NodeCount
+  NodeCount = 2  # Changer ici pour ajouter des workers
 ```
 
-!!!!! Pensez à modifier fichier `requirement.sh` en conséquence !!!!!
-
-![harbor](img/requierement.png)
 
 ### Changement nom worker
 ```bash
 kubectl label nodes worker1 node-role.kubernetes.io/worker=worker
 ```
 
-## Recapitulatif Machines
-| name | ip | memory | core | disk | os | id/pw
-|---| --- | --- | --- | --- | --- | ---
-|k8s-master| 192.168.10.100  | 2048 | 2 | 33 | [Almalinux 9.2 x64](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
-|k8s-worker1| 192.168.10.2  | 2048 | 2 | 47 | [Almalinux 9.2 x64](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
-|k8s-worker2| 192.168.10.3  | 2048 | 2 | 47 | [Almalinux 9.2 x64](https://app.vagrantup.com/almalinux/boxes/9) | vagrant/vagrant
+## Id/pw
+vagrant/vagrant
