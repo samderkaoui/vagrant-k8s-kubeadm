@@ -21,7 +21,7 @@ Status du projet :
   - [x] Utilisation de Flannel (calico erreur avec interface Virtualbox flemme de creuser => Cilium alma9 :) )
   - [x] Désactivation firewalld
   - [x] Ajout Métrics server
-  - [x] Ajout dans script master pour Un-Taint node master
+  - [x] Ajout dans script master.sh Un-Taint node master
   - [x] Ajout Kubernetes Dashboard
   - [ ] Fixer install auto de k9s ?
   - [ ] Choisir un Gateway (Ingress trop vieux, on passe à la Gateway API ! 🚀) => [![tag](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=Istio&logoColor=white)](none)
