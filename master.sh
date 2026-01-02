@@ -40,9 +40,33 @@ su - vagrant -c "kubectl apply -f /vagrant/metrics-server.yaml"
 echo "[TACHE 8] GÉNÉRER ET ENREGISTRER LA COMMANDE DE REJOINDRE LE CLUSTER DANS /VAGRANT/JOINCLUSTER.SH"
 sudo kubeadm token create --print-join-command > /vagrant/joincluster.sh 2>/dev/null
 
-echo "[TACHE 9] INSTALLER K9S"
-su - vagrant -c "curl -sS https://webi.sh/k9s | sh"
-su - vagrant -c "source ~/.config/envman/PATH.env"
+# echo "[TACHE 9] INSTALLER K9S"
+# su - vagrant -c "curl -sS https://webi.sh/k9s | sh"
+# su - vagrant -c "source ~/.config/envman/PATH.env"
+
+echo "[TACHE 9] INSTALLER K9S (version stable)"
+
+# Téléchargement direct de la dernière version stable (au 02 jan 2026 : v0.32.5, mais on prend latest)
+K9S_VERSION=$(curl -s https://api.github.com/repos/derailed/k9s/releases/latest | grep tag_name | cut -d '"' -f 4)
+# Si pas d'internet, on force une version connue stable
+if [ -z "$K9S_VERSION" ]; then
+    echo "Pas d'accès à GitHub → utilisation d'une version connue stable"
+    K9S_VERSION="v0.32.5"
+fi
+
+echo "Version k9s détectée/forcée : $K9S_VERSION"
+
+sudo curl -L https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_amd64.tar.gz \
+    -o /tmp/k9s.tar.gz
+
+sudo tar -xzf /tmp/k9s.tar.gz -C /tmp k9s
+sudo mv /tmp/k9s /usr/local/bin/k9s
+sudo chmod +x /usr/local/bin/k9s
+# Nettoyage
+rm -f /tmp/k9s.tar.gz
+
+echo "k9s installé avec succès !"
+echo "Utilisation : k9s"
 
 
 echo "[TACHE 10] DÉPLOYER LE DASHBOARD KUBERNETES"

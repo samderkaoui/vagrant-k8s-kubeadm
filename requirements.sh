@@ -10,16 +10,17 @@ sudo dnf install -y dnf-utils
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf install wget curl vim containerd.io container-selinux -y
 sudo dnf clean all
+sudo systemctl start containerd
+sudo systemctl enable containerd
 
 
-sudo systemctl disable --now firewalld
-sudo systemctl stop firewalld
+echo "[TACHE OPTIM] ALLÉGER ALMALINUX"
+sudo systemctl disable --now firewalld auditd gssproxy irqbalance polkit postfix avahi-daemon cups bluetooth libvirtd rpcbind
 #sudo dnf install -y firewalld
 #sudo systemctl enable --now firewalld
 #sudo firewall-cmd --permanent --add-service=ssh
 #sudo firewall-cmd --reload
-sudo systemctl start containerd
-sudo systemctl enable containerd
+
 
 
 
@@ -71,5 +72,9 @@ echo "[TACHE 6] INSTALLER KUBEADM, KUBELET, KUBECTL"
 sudo dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 
-echo "[TACHE 7] SLEEP 20s"
-sleep 20
+echo "[TACHE 7] SLEEP 10s"
+sleep 10
+
+echo "[TACHE 8] Clean"
+sudo dnf autoremove
+sudo dnf clean all
