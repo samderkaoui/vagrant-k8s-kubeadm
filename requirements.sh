@@ -13,7 +13,7 @@ sudo systemctl start containerd
 sudo systemctl enable containerd
 
 
-echo "[TACHE OPTIM] ALLÉGER ALMALINUX"
+echo "[TACHE OPTIM] ALLÉGER ALMALINUX de 150Mb environ"
 sudo systemctl disable --now firewalld auditd gssproxy irqbalance polkit postfix avahi-daemon cups bluetooth libvirtd rpcbind
 #sudo dnf install -y firewalld
 #sudo systemctl enable --now firewalld
