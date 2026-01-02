@@ -35,7 +35,7 @@ su - vagrant -c "kubectl patch daemonset kube-flannel-ds -n kube-flannel --type=
 sleep 15
 
 echo "[TACHE 7] DÉPLOYER METRICS-SERVER"
-su - vagrant -c "kubectl apply -f /vagrant/metrics-server.yaml"
+su - vagrant -c "kubectl apply -f /vagrant/manifests/metrics-server.yaml"
 
 echo "[TACHE 8] GÉNÉRER ET ENREGISTRER LA COMMANDE DE REJOINDRE LE CLUSTER DANS /VAGRANT/JOINCLUSTER.SH"
 sudo kubeadm token create --print-join-command > /vagrant/joincluster.sh 2>/dev/null
@@ -100,5 +100,16 @@ subjects:
 EOF
 "
 
-echo "[TACHE 12] GÉNÉRER LE JETON D'ACCÈS POUR LE DASHBOARD ET L'ENREGISTRER DANS /VAGRANT/TOKEN_DASHBOARD.TXT"
+echo "TACHE 12] Installation kubens et kubectx"
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+# Optionnel mais recommandé : rendre exécutables (au cas où)
+sudo chmod +x /opt/kubectx/kubectx /opt/kubectx/kubens
+# fzf pour le mode interactif (fortement recommandé !)
+su - vagrant -c "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf"
+su - vagrant -c "~/.fzf/install --all"
+su - vagrant -c "source ~/.bashrc"
+
+echo "[TACHE 13] GÉNÉRER LE JETON D'ACCÈS POUR LE DASHBOARD ET L'ENREGISTRER DANS /VAGRANT/TOKEN_DASHBOARD.TXT"
 su - vagrant -c "kubectl -n kubernetes-dashboard create token dashboard-admin > /vagrant/token_dashboard.txt"

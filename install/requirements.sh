@@ -8,7 +8,7 @@ sudo rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
 sudo dnf upgrade -y almalinux-release
 sudo dnf install -y dnf-utils
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install wget curl vim containerd.io container-selinux -y
+sudo dnf install wget git curl vim containerd.io container-selinux -y
 sudo systemctl start containerd
 sudo systemctl enable containerd
 

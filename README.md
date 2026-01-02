@@ -25,6 +25,7 @@ Status du projet :
   - [x] Ajout Kubernetes Dashboard
   - [x] Fixer install auto de k9s
   - [x] Optimisation Almalinux et nettoyage DNF
+  - [x] Ajout kubens/kubectx
   - [ ] Choisir un Gateway (Ingress trop vieux, on passe à la Gateway API ! 🚀) => [![tag](https://img.shields.io/badge/Istio-466BB0?style=for-the-badge&logo=Istio&logoColor=white)](none)
 
 - TO DO

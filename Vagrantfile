@@ -26,7 +26,7 @@ Vagrant.configure(2) do |config|
 EOF
   SHELL
 
-  config.vm.provision "shell", path: "requirements.sh", privileged: true
+  config.vm.provision "shell", path: "install/requirements.sh", privileged: true
   
   # Définition du master
   config.vm.define "master" do |master|
@@ -39,7 +39,7 @@ EOF
       vb.cpus = MASTER_CPUS
       vb.linked_clone = LINKED_CLONE
     end
-    master.vm.provision "shell", path: "master.sh", privileged: true
+    master.vm.provision "shell", path: "install/master.sh", privileged: true
   end
   
   (1..NodeCount).each do |i|
@@ -53,7 +53,7 @@ EOF
         vb.cpus = WORKER_CPUS
         vb.linked_clone = LINKED_CLONE
       end
-      node.vm.provision "shell", path: "worker.sh", privileged: true
+      node.vm.provision "shell", path: "install/worker.sh", privileged: true
     end
   end
 
