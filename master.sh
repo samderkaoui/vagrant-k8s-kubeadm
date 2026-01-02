@@ -39,3 +39,42 @@ su - vagrant -c "kubectl apply -f /vagrant/metrics-server.yaml"
 
 echo "[TACHE 8] GÉNÉRER ET ENREGISTRER LA COMMANDE DE REJOINDRE LE CLUSTER DANS /VAGRANT/JOINCLUSTER.SH"
 sudo kubeadm token create --print-join-command > /vagrant/joincluster.sh 2>/dev/null
+
+echo "[TACHE 9] INSTALLER K9S"
+su - vagrant -c "curl -sS https://webi.sh/k9s | sh"
+su - vagrant -c "source ~/.config/envman/PATH.env"
+
+
+echo "[TACHE 10] DÉPLOYER LE DASHBOARD KUBERNETES"
+su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml"
+sleep 15
+
+echo "[TACHE 11] CRÉER LE SERVICEACCOUNT ET LE CLUSTERROLEBINDING POUR ACCÉDER AU DASHBOARD"
+su - vagrant -c "
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dashboard-admin
+  namespace: kubernetes-dashboard
+EOF
+"
+su - vagrant -c "
+cat <<EOF | kubectl apply -f -
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dashboard-admin-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: dashboard-admin
+  namespace: kubernetes-dashboard
+EOF
+"
+
+echo "[TACHE 12] GÉNÉRER LE JETON D'ACCÈS POUR LE DASHBOARD ET L'ENREGISTRER DANS /VAGRANT/TOKEN_DASHBOARD.TXT"
+su - vagrant -c "kubectl -n kubernetes-dashboard create token dashboard-admin > /vagrant/token_dashboard.txt"
