@@ -6,9 +6,9 @@ MASTER_CPUS = 2
 WORKER_MEMORY = 2048
 WORKER_CPUS = 2
 LINKED_CLONE = true
-ALMA_VERSION = "8.8.20230606"
-IP_MASTER = "192.168.56.100"
-IP_WORKER_BASE = "192.168.56."
+ALMA_VERSION = "10.1.20251125"
+IP_MASTER = "192.168.10.100"
+IP_WORKER_BASE = "192.168.10."
 
 Vagrant.configure(2) do |config|
 
@@ -30,7 +30,7 @@ EOF
   
   # Définition du master
   config.vm.define "master" do |master|
-    master.vm.box = "almalinux/8"
+    master.vm.box = "almalinux/10"
     master.vm.box_version = ALMA_VERSION
     master.vm.hostname = "k8s-master"
     master.vm.network "private_network", ip: IP_MASTER
@@ -44,7 +44,7 @@ EOF
   
   (1..NodeCount).each do |i|
     config.vm.define "worker#{i}" do |node|
-      node.vm.box = "almalinux/8"
+      node.vm.box = "almalinux/10"
       node.vm.box_version = ALMA_VERSION
       node.vm.hostname = "k8s-worker#{i}"
       node.vm.network "private_network", ip: "#{IP_WORKER_BASE}#{i + 1}" # worker1: .2, worker2: .3, etc.

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Variables
 #CALICO_VERSION="3.31.3"
-IP_MASTER="192.168.56.100"
+IP_MASTER="192.168.10.100"
 
 #echo "[TACHE 1] PREREQUIS FIREWALLD"
 #sudo firewall-cmd --permanent --add-service=ssh
@@ -26,9 +26,9 @@ echo "[TACHE 5] DÉPLOYER LE RÉSEAU FLANNEL"
 su - vagrant -c "kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml"
 sleep 5
 
-echo "[TACHE 6] CONFIGURER FLANNEL POUR UTILISER LA BONNE INTERFACE RÉSEAU (enp0s8)"
+echo "[TACHE 6] CONFIGURER FLANNEL POUR UTILISER LA BONNE INTERFACE RÉSEAU (eth1)"
 su - vagrant -c "kubectl patch daemonset kube-flannel-ds -n kube-flannel --type='json' -p='[
-  {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--iface=enp0s8"}
+  {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--iface=eth1"}
 ]'
 "
 
@@ -100,7 +100,7 @@ subjects:
 EOF
 "
 
-echo "TACHE 12] Installation kubens et kubectx"
+echo "TACHE 12] Installation kubens et kubectx ohmyzsh"
 sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
@@ -111,5 +111,29 @@ su - vagrant -c "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf"
 su - vagrant -c "~/.fzf/install --all"
 su - vagrant -c "source ~/.bashrc"
 
+# Installer zsh non-interactivement (package)
+sudo dnf install -y zsh
+
+# Installer oh-my-zsh pour l'utilisateur vagrant sans interaction :
+# - CHSH=no empêche le script de tenter de changer le shell lui-même (évite la question interactive)
+# - RUNZSH=no empêche le script de lancer zsh immédiatement
+# On exécute en tant que vagrant pour que les fichiers soient créés dans /home/vagrant
+su - vagrant -c 'env CHSH=no RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+
+# Forcer le changement de shell pour l'utilisateur vagrant vers zsh (non-interactif)
+# Utilise usermod pour être sûr que le shell est bien modifié
+sudo usermod -s "$(command -v zsh)" vagrant
+
+sudo cp /vagrant/install/.zshrc /home/vagrant/.zshrc
+source /home/vagrant/.zshrc
+
+# Remarques :
+# - Si vous souhaitez préserver un fichier ~/.zshrc existant, appelez l'installateur avec
+#   KEEP_ZSHRC=yes (ex: env CHSH=no RUNZSH=no KEEP_ZSHRC=yes sh -c "...").
+# - Le changement de shell est appliqué dans /etc/passwd immédiatement ; pour que
+#   la session SSH en cours utilise le nouveau shell, reconnectez-vous (log out / log in).
+
 echo "[TACHE 13] GÉNÉRER LE JETON D'ACCÈS POUR LE DASHBOARD ET L'ENREGISTRER DANS /VAGRANT/TOKEN_DASHBOARD.TXT"
 su - vagrant -c "kubectl -n kubernetes-dashboard create token dashboard-admin > /vagrant/token_dashboard.txt"
+
+sudo modprobe br_netfilter

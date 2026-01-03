@@ -1,14 +1,12 @@
 #!/bin/bash
 # Variables
-KUBE_REPO_VER="v1.30" # cgroup v1 car almalinux 8 , sinon passer a v 1.31+ avec alma9/10
+KUBE_REPO_VER="v1.35" # cgroup v1 car almalinux 8 , sinon passer a v 1.31+ avec alma9/10
 
 echo "[TACHE 1] PREREQUIS (paquets , SSH, firewall)"
 #sudo dnf update -y
-sudo rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux
-sudo dnf upgrade -y almalinux-release
 sudo dnf install -y dnf-utils
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo dnf install wget git curl vim containerd.io container-selinux -y
+sudo dnf install wget git curl vim containerd.io container-selinux kernel-modules kernel-modules-extra -y
 sudo systemctl start containerd
 sudo systemctl enable containerd
 
